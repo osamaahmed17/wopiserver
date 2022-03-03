@@ -196,7 +196,8 @@ def statx(endpoint, fileref, userid, versioninv=0):
             'filepath': filepath,
             'ownerid': statxdata[5] + ':' + statxdata[6],
             'size': int(statxdata[8]),
-            'mtime': int(statxdata[12])
+            'mtime': int(statxdata[12]),
+            'etag': statxdata[12],   # TODO extract the ETAG from a fileinfo query
         }
     # now stat the corresponding version folder to get an inode invariant to save operations, see CERNBOX-1216
     verFolder = os.path.dirname(filepath) + os.path.sep + EOSVERSIONPREFIX + os.path.basename(filepath)
@@ -232,7 +233,8 @@ def statx(endpoint, fileref, userid, versioninv=0):
         'filepath': filepath,
         'ownerid': statxdata[5] + ':' + statxdata[6],
         'size': int(statxdata[8]),
-        'mtime': int(statxdata[12])
+        'mtime': int(statxdata[12]),
+        'etag': statxdata[12],    # TODO extract the ETAG from a fileinfo query
     }
 
 

@@ -88,15 +88,16 @@ def stat(endpoint, fileref, userid, versioninv=1):
             'filepath': statInfo.info.path,
             'ownerid': statInfo.info.owner.opaque_id + '@' + statInfo.info.owner.idp,
             'size': statInfo.info.size,
-            'mtime': statInfo.info.mtime.seconds
+            'mtime': statInfo.info.mtime.seconds,
+            'etag': statInfo.info.etag,
         }
     log.info('msg="Failed stat" fileref="%s" reason="%s"' % (fileref, statInfo.status.message.replace('"', "'")))
     raise IOError(common.ENOENT_MSG if statInfo.status.code == cs3code.CODE_NOT_FOUND else statInfo.status.message)
 
 
-def statx(endpoint, fileid, userid, versioninv=0):
-    '''Get extended stat info (inode, filepath, userid, size, mtime). Equivalent to stat.'''
-    return stat(endpoint, fileid, userid, versioninv)
+def statx(endpoint, fileref, userid, versioninv=0):
+    '''Get extended stat info (inode, filepath, userid, size, mtime, etag). Equivalent to stat.'''
+    return stat(endpoint, fileref, userid, versioninv)
 
 
 def setxattr(_endpoint, filepath, userid, key, value, lockid):
